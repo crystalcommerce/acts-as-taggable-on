@@ -1,5 +1,5 @@
 module ActsAsTaggableOn
-  class Tagging < ::ActiveRecord::Base #:nodoc:
+  class Tagging < ActsAsTaggableOn.parent_model_class.constantize #:nodoc:
     #TODO, remove from 4.0.0
     attr_accessible :tag,
                     :tag_id,

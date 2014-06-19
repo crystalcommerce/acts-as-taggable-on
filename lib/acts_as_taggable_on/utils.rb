@@ -9,12 +9,19 @@ module ActsAsTaggableOn
       end
 
       def using_postgresql?
-        connection && connection.adapter_name == 'PostgreSQL'
+        ActsAsTaggableOn.parent_model_class.constantize.connection &&
+          ActsAsTaggableOn.parent_model_class.constantize.connection.adapter_name == 'PostgreSQL'
       end
 
       def using_mysql?
         #We should probably use regex for mysql to support prehistoric adapters
-        connection && connection.adapter_name == 'Mysql2'
+        ActsAsTaggableOn.parent_model_class.constantize.connection &&
+          ActsAsTaggableOn.parent_model_class.constantize.connection.adapter_name == 'Mysql2'
+      end
+
+      def using_sqlite?
+        ActsAsTaggableOn.parent_model_class.constantize.connection &&
+          ActsAsTaggableOn.parent_model_class.constantize.connection.adapter_name == 'SQLite'
       end
 
       def sha_prefix(string)

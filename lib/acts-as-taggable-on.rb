@@ -36,6 +36,11 @@ module ActsAsTaggableOn
   class DuplicateTagError < StandardError
   end
 
+  unless respond_to?(:parent_model_class)
+    mattr_accessor :parent_model_class
+    self.parent_model_class = "::ActiveRecord::Base"
+  end
+
   def self.setup
     @configuration ||= Configuration.new
     yield @configuration if block_given?
