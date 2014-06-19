@@ -1,5 +1,5 @@
 module ActsAsTaggableOn
-  class Tag < ::ActiveRecord::Base
+  class Tag < ActsAsTaggableOn.parent_model_class.constantize
     include ActsAsTaggableOn::Utils
 
     attr_accessible :name if defined?(ActiveModel::MassAssignmentSecurity)

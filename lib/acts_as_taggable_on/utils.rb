@@ -8,11 +8,13 @@ module ActsAsTaggableOn
 
     module OverallMethods
       def using_postgresql?
-        ::ActiveRecord::Base.connection && ::ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'
+        ActsAsTaggableOn.parent_model_class.constantize.connection &&
+          ActsAsTaggableOn.parent_model_class.constantize.connection.adapter_name == 'PostgreSQL'
       end
 
       def using_sqlite?
-        ::ActiveRecord::Base.connection && ::ActiveRecord::Base.connection.adapter_name == 'SQLite'
+        ActsAsTaggableOn.parent_model_class.constantize.connection &&
+          ActsAsTaggableOn.parent_model_class.constantize.connection.adapter_name == 'SQLite'
       end
 
       def sha_prefix(string)

@@ -22,6 +22,11 @@ module ActsAsTaggableOn
   mattr_accessor :remove_unused_tags
   self.remove_unused_tags = false
 
+  unless respond_to?(:parent_model_class)
+    mattr_accessor :parent_model_class
+    self.parent_model_class = "::ActiveRecord::Base"
+  end
+
   def self.glue
     delimiter = @@delimiter.kind_of?(Array) ? @@delimiter[0] : @@delimiter
     delimiter.ends_with?(" ") ? delimiter : "#{delimiter} "
