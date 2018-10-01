@@ -22,19 +22,22 @@ module ActsAsTaggableOn
     ### SCOPES:
 
     def self.named(name)
-      if ActsAsTaggableOn.strict_case_match
-        where(["name = #{binary}?", name])
-      else
-        where(["lower(name) = ?", name.downcase])
-      end
+      where(["name = #{binary}?", name])
+      # collation is case insensitive, this breaks all indexes
+      # if ActsAsTaggableOn.strict_case_match
+      #   where(["name = #{binary}?", name])
+      # else
+      #   where(["lower(name) = ?", name.downcase])
+      # end
     end
 
     def self.named_any(list)
-      if ActsAsTaggableOn.strict_case_match
-        where(list.map { |tag| sanitize_sql(["name = #{binary}?", tag.to_s.mb_chars]) }.join(" OR "))
-      else
-        where(list.map { |tag| sanitize_sql(["lower(name) = ?", tag.to_s.mb_chars.downcase]) }.join(" OR "))
-      end
+      where(list.map { |tag| sanitize_sql(["name = #{binary}?", tag.to_s.mb_chars]) }.join(" OR "))
+      # if ActsAsTaggableOn.strict_case_match
+      #   where(list.map { |tag| sanitize_sql(["name = #{binary}?", tag.to_s.mb_chars]) }.join(" OR "))
+      # else
+      #   where(list.map { |tag| sanitize_sql(["lower(name) = ?", tag.to_s.mb_chars.downcase]) }.join(" OR "))
+      # end
     end
 
     def self.named_like(name)
